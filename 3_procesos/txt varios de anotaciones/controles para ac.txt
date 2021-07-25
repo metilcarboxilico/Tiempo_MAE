@@ -1,0 +1,128 @@
+
+
+cp5 frame *
+cp5 acordion *
+cp5 slider *
+cp5 range *
+cp5 bangs *
+
+
+generar un boton mas para guardar un doc con esa configuracion
+
+//0
+3  botones save config,  reseteo shader y seteo // una funcion que al reseteo iguale cnt a 20/40
+
+//1
+bias 9 slider  divisor 1
+//2
+12
+//3  
+6 resul
+//4
+6 rul
+//5
+1 dft   (de - 255 a 255)?
+34 slider
+//6
+ + 4 esteticos de zoom ??
+get(i).setRulset(...);
+
+
+void {
+get(i).setRange
+setShader() 
+}
+
+  void setDivisor(float k_) {
+
+  setBias(float[] bias_) {
+
+  void setDefaultNorm(float dft_)
+
+
+
+
+void setRange(float[] fA_) {
+    rulRange =fA_;
+  }
+  void setRul(float[] fA_) {
+    rulset =fA_;
+  }
+  void setResultado(float[] fA_) {
+    resultado =fA_;
+  }
+
+void setRulset(float[] fA_){
+   rulset =fA_;
+    ac.set("rules", rulset); 
+}
+
+  void setShader() { 
+    if (isRulRange) { 
+      ac = loadShader("ac arrayrand.glsl");
+      ac.set("minmax", rulRange);
+    } else {
+      ac = loadShader("ac array.glsl");
+      ac.set("resul", resultado);
+    }
+  }
+
+  
+void setRulset(){
+    ac.set("rules", rulset); 
+}
+
+  void setDefault(float dft_) {
+    ac.set("dft", (float)(norm*-(dft_)*10));
+  }
+
+
+  void setDivisor(float k_) {
+    this.divisor =k_;
+    this.ac.set("divisor", divisor);
+  }
+
+  void setBias(float[] bias_) {
+    this.bias=bias_;
+    this.ac.set("bias", bias);
+  }
+
+  void setDefault(float dft_) {
+    dft= dft_;
+    ac.set("dft", dft);
+  }
+  void setDefaultNorm(float dft_) {
+    dft= (float)(norm*dft_);
+    ac.set("dft", dft);
+  }
+
+
+  void setDivisor() {
+    this.ac.set("divisor", divisor);
+  }
+
+
+  void setBias() {
+    this.ac.set("bias", bias);
+  }
+  void setDefault() {
+    ac.set("dft", dft);
+  }
+
+
+//////////////////////
+
+
+  void setZoomAcX(float k_) {
+    this.zoomAcX= k_;
+  } 
+  void setZoomAcY(float k_) {
+    this.zoomAcY= k_;
+  }
+  void setZoomImgX(float k_) {
+    this.zoomImgX= k_;
+  }
+  void setZoomImgY(float k_) {
+    this.zoomAcY= k_;
+  }
+  

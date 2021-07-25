@@ -1,0 +1,81 @@
+
+
+tomando el automata de cuasa/biopus
+
+
+    if(actual<30){
+     actual=(n+ne+e+se+s+so+o+no)/8; 
+    }else if(actual<140){
+     actual-=.1; 
+    }else {
+     actual-=.5; 
+    }
+    
+
+
+////////////////sitema de consumo lento
+//quizas una clausula de fortificar lo tonos bajos cuando se llega a cierto punto? o desde la propua lucha encontrar un contrapunto en esos equilibrios
+
+float iniciarCelula() {  
+  //carga en cada célula un valor al azar entre 0 y 255
+  float valor;
+  float rand=random(1);
+  if (rand<.2) { //20%
+    valor = random(255);
+  } else if (rand<.5) {  //30%
+    valor = random(100, 200);
+  } else if (rand<.9) {  //40%
+    valor = random(10, 50);
+  } else { //10%
+    valor = random(100);
+  }
+  return valor;
+}
+//-------------------------------------------------------------------------------------------------------------------------
+// PROGRAMAR AQUI: esta funciona es ejecutada por cada célula en cada ciclo para actualizar 
+// su valor.
+//-------------------------------------------------------------------------------------------------------------------------
+
+float actualizarCelula( float actual, float n, float ne, float e, float se, float s, 
+  float so, float o, float no, float x, float y ) {
+
+   if (actual<30) {
+    actual =random(160);
+  }else if (actual<30) {
+    actual=(n+ne+e+se+s+so+o+no)/8;
+  } else if (((n+ne+e+se+s+so+o+no)/8)>220) {
+    actual =random(45);
+  } else if (((n+ne+e+se+s+so+o+no)/8)>210) {
+    actual =random(255);
+  } else if (((n+ne+e+se+s+so+o+no)/8)>165) {
+    actual =random(220,255);
+  } else if (((n+ne+e+se+s+so+o+no)/8)>140) {
+    actual =random(110, 180);
+  }  else {
+    actual-=.4;
+  }
+------------------------------------
+
+estado muy estable
+
+  if (actual<30) {
+    actual =random(160);
+  } else if (actual<30) {
+    actual=(n+ne+e+se+s+so+o+no)/8;
+  } else if (((n+ne+e+se+s+so+o+no)/8)>220) {
+    actual =random(45);
+  } else if (((n+ne+e+se+s+so+o+no)/8)>210) {
+    actual =random(255);
+  } else if (((n+ne+e+se+s+so+o+no)/8)>165) {
+    actual =random(220, 255);
+  } else if (((n+ne+e+se+s+so+o+no)/8)>140) {
+    actual =random(110, 180);
+  } else if (((n+ne+e+se+s+so+o+no)/8)>100) {
+    actual =random(30, 100);
+  } else if (((n+ne+e+se+s+so+o+no)/8)>65) {
+    actual =random(45, 140);
+  } else if (((n+ne+e+se+s+so+o+no)/8)>45) {
+    actual =random(100, 250);
+  } else {
+    actual-=.4;
+  }

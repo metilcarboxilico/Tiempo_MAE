@@ -1,0 +1,79 @@
+
+
+void draw() {
+
+  automata.actualizar();
+  automata.dibujar();
+}
+----->>>>>>>>>>>>>>
+
+
+
+class AutomataCelular {
+
+  AutomataCelular( int ancho, int alto ) {
+    localizar(0, 0, width, height);
+    iniciar();
+}
+
+  void actualizar() {
+        celulas[i][j].operar( this );
+        celulas[i][j].actualizar( );
+}
+  void dibujar( ) {
+        celulas[i][j].dibujar( );
+}
+
+  void iniciar(){
+        celulas[i][j].iniciar( );
+}
+
+  void localizar( float left, float top, float right, float botton ) {
+        celulas[i][j].localizar( pasox*i+left, pasoy*j+top, pasox, pasoy );
+}
+
+
+------------------->>>>>>>>>>>>>>
+<<<<<<<<<<<<<funciones de la celula fuera de ella
+float iniciarCelula() {  
+  return valor;
+}
+
+//similar a rules
+float actualizarCelula( float actual, float n, float ne, float e, float se, float s, 
+  return proximo;
+}
+
+void dibujarCelula( float actual, float x, float y, float ancho, float alto ) {
+------------>>>>>>>>>>>>>>>>>>>>>>>>>
+
+class Celula {
+
+  float actual;
+  float futuro;
+
+  float x, y, ancho, alto;
+
+  int vecinoX[], vecinoY[];
+
+
+
+  Celula( int i, int j, int col, int fil ) {
+    vecinoX = new int[8];
+    vecinoY = new int[8];
+	}
+  void actualizar() {}
+  void dibujar() {  dibujarCelula( actual, x, y, ancho, alto );}
+  void iniciar(){iniciarCelula();}
+
+
+  void localizar(float x, float y, float ancho, float alto) {
+    this.x = x + ancho/2;
+    this.y = y + alto/2;
+    this.ancho = ancho;
+    this.alto = alto;
+  }
+
+  void operar( AutomataCelular todos ) { 
+actualizarCelula() 
+}

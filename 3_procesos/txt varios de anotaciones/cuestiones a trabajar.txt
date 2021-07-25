@@ -1,0 +1,29 @@
+
+
+
+cuestiones a trabajar
+
+cargar los videos desde un array y dentro de cada AC asociarle uno
+
+tamaño del automata
+__coordenadas X Y H W principio, alargo y ancho /  X Y X1 Y1 siendo principio final
+__proporciones y tamaño (util para deformar si uso ellipses)
+
+_niveles del automata? 
+_interaccion con otros automatas?
+_cuantos estados y como funcionan estos?
+
+##IMPORTANTISIMO una funcion que ajuste segun el tamaño del automata y sus cells, y se mapee o se ajuste a medida,a una region dell video
+
+#investigar sonidos
+
+#¿com oson los bordes del automata??
+
+#fondo
+
+
+*mezclar el video / color si se superan determinado rango?
+//if (actual>60&&actual<100)colPx=(colPx+color(255,65,20))/2;
+//se podria sacar color o llamar en la misma funcion un blend con otro video.
+
+imposible aplicar blendMode(ADD);

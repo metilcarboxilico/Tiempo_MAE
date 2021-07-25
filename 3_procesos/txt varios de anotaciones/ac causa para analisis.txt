@@ -1,0 +1,276 @@
+
+//definición 
+AutomataCelular automata;
+
+//---------------------------
+
+void setup() {
+  size( 1200, 700 );
+  //se inicializa pasando las columnas y filas
+  automata = new AutomataCelular( 120, 70 );
+}
+//---------------------------
+
+void draw() {
+
+  automata.actualizar();
+  automata.dibujar();
+}
+//---------------------------
+
+void keyPressed() {
+  if ( key == ' ' ) {
+    automata.iniciar();
+  }
+}
+//---------------------------
+
+
+// Actualizada al 21/Ago/2020
+//-------------------------------------------------------------------------------------------------------------------------
+//
+//  Emiliano Causa 2008-2020
+//  emiliano.causa@gmail.com
+//  emilianocausa.ar
+//  biopus.ar
+//
+//-------------------------------------------------------------------------------------------------------------------------
+class AutomataCelular {
+
+  int col;
+  int fil;
+
+  Celula[][] celulas;
+
+  //---------------------------
+//agrege pos x y , w h
+//hacen falta las col fil
+  AutomataCelular( int ancho, int alto, float posX , float posY , float w , float h ) {
+
+    col = ancho;
+    fil = alto;
+
+    celulas = new Celula[col][fil];
+
+    for ( int i=0; i<col; i++ ) {
+      for ( int j=0; j<fil; j++ ) {
+        celulas[i][j] = new Celula( i, j, col, fil );
+      }
+    }
+
+    localizar(posX , posY , w, h);
+    iniciar();
+  }
+  //---------------------------
+
+  void actualizar() {
+
+    for ( int j=0; j<fil; j++ ) {
+      for ( int i=0; i<col; i++ ) {
+        celulas[i][j].operar( this );
+      }
+    }
+
+    for ( int j=0; j<fil; j++ ) {
+      for ( int i=0; i<col; i++ ) {
+        celulas[i][j].actualizar( );
+      }
+    }
+  }
+  //---------------------------
+
+  void dibujar( ) {
+
+    for ( int j=0; j<fil; j++ ) {
+      for ( int i=0; i<col; i++ ) {
+        celulas[i][j].dibujar( );
+      }
+    }
+  }
+  //---------------------------
+  
+  void iniciar(){
+    for ( int j=0; j<fil; j++ ) {
+      for ( int i=0; i<col; i++ ) {
+        celulas[i][j].iniciar( );
+      }
+    }
+  }
+  //--------------------------- funcion encargada de dar la pos para el display
+
+  void localizar( float left, float top, float right, float botton ) {
+
+    float pasox = (right-left) * 1.0 / col;
+    float pasoy = (botton-top) * 1.0 / fil;
+
+    for ( int j=0; j<fil; j++ ) {
+      for ( int i=0; i<col; i++ ) {
+
+        celulas[i][j].localizar( pasox*i+left, pasoy*j+top, pasox, pasoy );
+      }
+    }
+  }
+  //---------------------------
+}
+
+
+
+// Actualizada al 21/Ago/2020
+//-------------------------------------------------------------------------------------------------------------------------
+//
+//  Emiliano Causa 2008-2020
+//  emiliano.causa@gmail.com
+//  emilianocausa.ar
+//  biopus.ar
+//
+//-------------------------------------------------------------------------------------------------------------------------
+// PROGRAMAR AQUI: esta funciona es ejecutada por cada célula al iniciar.
+//-------------------------------------------------------------------------------------------------------------------------
+
+float iniciarCelula() {  
+  //carga en cada célula un valor al azar entre 0 y 255
+  float valor = random(255);
+  return valor;
+}
+//-------------------------------------------------------------------------------------------------------------------------
+// PROGRAMAR AQUI: esta funciona es ejecutada por cada célula en cada ciclo para actualizar 
+// su valor.
+//-------------------------------------------------------------------------------------------------------------------------
+
+float actualizarCelula( float actual, float n, float ne, float e, float se, float s, 
+  float so, float o, float no, float x, float y ) {
+
+  float promedio = (actual+n+ne+e+se+s+so+o+no)/9.0;
+
+  promedio = ( promedio<0 ? 0 : promedio-1);
+  
+  float proximo = promedio;
+  
+  if( mousePressed && dist(x,y,mouseX,mouseY)<100 ){
+    proximo = actual+30;
+  }
+
+  
+  return proximo;
+}
+//-------------------------------------------------------------------------------------------------------------------------
+// PROGRAMAR AQUI: esta funciona es ejecutada por cada célula en cada ciclo para dibujarse 
+// en pantalla.
+//-------------------------------------------------------------------------------------------------------------------------
+
+void dibujarCelula( float actual, float x, float y, float ancho, float alto ) {
+
+  rectMode(CENTER);
+  fill( constrain(actual,0,255) );
+  rect( x, y, ancho, alto );
+}
+//---------------------------
+
+
+// Actualizada al 21/Ago/2020
+//-------------------------------------------------------------------------------------------------------------------------
+//
+//  Emiliano Causa 2008-2020
+//  emiliano.causa@gmail.com
+//  emilianocausa.ar
+//  biopus.ar
+//
+//-------------------------------------------------------------------------------------------------------------------------
+class Celula {
+
+  float actual;
+  float futuro;
+
+  float x, y, ancho, alto;
+
+  int vecinoX[], vecinoY[];
+
+  //---------------------------
+
+  Celula( int i, int j, int col, int fil ) {
+    vecinoX = new int[8];
+    vecinoY = new int[8];
+
+    //n
+    vecinoX[0] = i;
+    vecinoY[0] = j-1;
+    //ne
+    vecinoX[1] = i+1;
+    vecinoY[1] = j-1;
+    //e
+    vecinoX[2] = i+1;
+    vecinoY[2] = j;
+    //se
+    vecinoX[3] = i+1;
+    vecinoY[3] = j+1;
+    //s
+    vecinoX[4] = i;
+    vecinoY[4] = j+1;
+    //so
+    vecinoX[5] = i-1;
+    vecinoY[5] = j+1;
+    //o
+    vecinoX[6] = i-1;
+    vecinoY[6] = j;
+    //no
+    vecinoX[7] = i-1;
+    vecinoY[7] = j-1;
+
+    for ( int k=0; k<8; k++ ) { // condiciones necesarias para plano continuado
+      vecinoX[k] = ( vecinoX[k] < 0 ? col-1 : vecinoX[k] );
+      vecinoX[k] = ( vecinoX[k] > col-1 ? 0 : vecinoX[k] );
+      vecinoY[k] = ( vecinoY[k] < 0 ? fil-1 : vecinoY[k] );
+      vecinoY[k] = ( vecinoY[k] > fil-1 ? 0 : vecinoY[k] );
+    }
+
+  }
+  //---------------------------
+
+  void actualizar() {
+    actual = futuro;
+  }
+  //---------------------------
+
+  void dibujar() {
+    dibujarCelula( actual, x, y, ancho, alto );
+  }
+  //---------------------------
+  
+  void iniciar(){
+    actual = iniciarCelula();
+  }
+  //--------------------------- setea el pos para el display y otras op
+
+  void localizar(float x, float y, float ancho, float alto) {
+    this.x = x + ancho/2;
+    this.y = y + alto/2;
+    this.ancho = ancho;
+    this.alto = alto;
+  }
+  //---------------------------funcion que toma al AC
+
+  void operar( AutomataCelular todos ) {
+
+    futuro = actualizarCelula( actual 
+      , todos.celulas[ vecinoX[0] ][ vecinoY[0] ].actual 
+      , todos.celulas[ vecinoX[1] ][ vecinoY[1] ].actual 
+      , todos.celulas[ vecinoX[2] ][ vecinoY[2] ].actual
+      , todos.celulas[ vecinoX[3] ][ vecinoY[3] ].actual 
+      , todos.celulas[ vecinoX[4] ][ vecinoY[4] ].actual
+      , todos.celulas[ vecinoX[5] ][ vecinoY[5] ].actual
+      , todos.celulas[ vecinoX[6] ][ vecinoY[6] ].actual
+      , todos.celulas[ vecinoX[7] ][ vecinoY[7] ].actual
+      , x
+      , y
+      );
+  }
+  //---------------------------
+}
+
+
+
+
+
+
+
+

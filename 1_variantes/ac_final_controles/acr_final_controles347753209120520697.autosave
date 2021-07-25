@@ -1,0 +1,150 @@
+
+//import processing.video.*;
+import java.io.File;
+
+import controlP5.*;
+
+ControlP5 cp5;
+
+Accordion accordion;
+
+Range range0, range1, range2, range3, range4, range5, dfault;
+
+float min0, min1, min2, min3, min4, min5;
+float max0, max1, max2, max3, max4, max5;
+float minMax[];  
+
+  float rulset0, rulset1, rulset2, rulset3, rulset4, rulset5;
+
+float resultado0, resultado1, resultado2, resultado3, resultado4, resultado5;
+
+float bias0, bias1, bias2, bias3, bias4, bias5, bias6, bias7, bias8, divisor;
+
+float zoomX, zoomY, zoomXac, zoomYac;
+final double norm =1.0/255; //normalizacion del 255 si se usa otro rango del espacio color aqui se ajusta ejemplo rgb 100 => 1./100
+
+color label=color(255), active=color(200), back=color(20), fore=color(170), valueLabel=color(255) ;
+
+
+JSONArray values;
+
+PImage[] listImg;
+
+HashMap<Integer, FloatList> minmax ;
+HashMap<Integer, FloatList> rul ;
+HashMap<Integer, FloatList> resul ;
+
+ArrayList<Ac> acList;
+
+boolean recording=false;
+
+
+String path = "F:/Documentos/programacion/processing/sketchs/mae/proyectos mae/tiempo/procesos/cargar_carpeta/data/img";
+
+String regex ="(.jpg|.JPG)";
+
+
+void setup() {
+  size(1000, 800, P3D);  
+  gui();
+  surface.setTitle("AC");
+  surface.setLocation(100, 100);
+  randomSeed(2021);
+  frameRate(10);
+
+  //cargo los rulsets desde csv
+  minmax = cargarRangeRul();
+  rul = cargarRul();
+  resul = cargarResul();
+
+  //genero instancias desde json
+  values = loadJSONArray("data-mid-test.json");
+  acList = new ArrayList<Ac>(); 
+  for (int i = 0; i < values.size(); i++) {
+    print("\n");
+    JSONObject obj = values.getJSONObject(i); 
+    acList.add(new Ac(obj) );
+  }
+  print("hay ", values.size(), " instancias de ac\n");
+
+
+  StringList jpg;
+  jpg = listDirRegex( path, regex);
+
+  listImg = new PImage[jpg.size()] ;
+  for (int i= 0; i< jpg.size(); i++) listImg[i] = loadImage(path+"/"+jpg.get(i));   // println("jpg ",i," : ",jpg.get(i));
+
+
+
+  //setDefault(float dft_)
+  //seteo a ac
+  for (int i=acList.size()-1; i>=0; i--) {
+
+    acList.get(i).setRange(normalizar(devolver(minmax, 1)));
+    acList.get(i).setRul(normalizar(devolver(rul, 1)));
+    acList.get(i).setResultado(normalizar(devolver(resul, 1)));
+
+    acList.get(i).setAcShader();
+    //printArray(acList.get(i).rulRange);
+    //printArray(acList.get(i).rulset);
+    // printArray(acList.get(i).resultado);
+  }
+
+
+
+  //---------fin setup----------------------
+}
+
+
+
+//float cnt=0;
+int contador=0, estadoFuturo=int(random(5, 50)), estadoFuturoLoc = int(random(270, 400));
+int locTempX =int(width/4*randomGaussian()+width/2), locTempY = int(height/4 *randomGaussian()+height/2);
+
+
+void draw() {
+  /*
+  if (frameCount%estadoFuturo==0) {
+   estadoFuturo= int(random(5, 50));
+   
+   }
+   */
+  if (frameCount%estadoFuturoLoc==0) {
+    locTempX =int(width/4*randomGaussian()+width/2);
+    locTempY = int(height/4 *randomGaussian()+height/2 );
+    estadoFuturoLoc = int(random(70, 100));
+    contador++;
+  }
+
+  background(0);
+
+  for (int i=acList.size()-1; i>=0; i--) {
+    Ac acTemp = acList.get(i);
+    acTemp.actualizar();
+    //acTemp.dibujar();
+    float dist=width/acList.size();
+    acTemp.dibujar(listImg[(contador+acTemp.id)%listImg.length], dist*i, 0);//contador%listMovie.length
+    //locTempX
+
+    //if(acTemp.isDead()) acList.remove(i); //par afuturas actulizaciones
+  }
+
+  if (recording) saveFrame("output/secuencia/secuencia_####.png");
+}
+
+
+
+
+void keyPressed() {
+  if (key  =='r'||key =='R')  recording= !recording;
+  if (key == 'c'||key =='C') saveFrame("output/capturas/####.png");
+}
+/*for (int i=acList.size()-1; i>=0; i--) {
+ acList.get(i).
+ }*/
+void mousePressed() {
+}
+void mouseReleased() {
+  //println("zoomYac ",zoomYac);
+  //printArray(minMax);
+}

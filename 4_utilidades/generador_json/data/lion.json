@@ -1,0 +1,72 @@
+[
+  {
+    "id": 0,
+    "species": "Panthera leo",
+    "float1": -12.237,
+    "float2": 2.556,
+    "float3": 6.32982958909831
+  },
+  {
+    "id": 1,
+    "species": "Panthera leo",
+    "float1": 0.806,
+    "float2": 2.556,
+    "float3": -22.050340954998894
+  },
+  {
+    "id": 2,
+    "species": "Panthera leo",
+    "float1": 40.296,
+    "float2": 2.556,
+    "float3": -35.040956412857206
+  },
+  {
+    "id": 3,
+    "species": "Panthera leo",
+    "float1": -4.386,
+    "float2": 2.556,
+    "float3": 16.39847734259574
+  },
+  {
+    "id": 4,
+    "species": "Panthera leo",
+    "float1": 9.77,
+    "float2": 2.556,
+    "float3": -24.701816577872826
+  },
+  {
+    "id": 5,
+    "species": "Panthera leo",
+    "float1": 7.988,
+    "float2": 2.556,
+    "float3": 37.25044782845974
+  },
+  {
+    "id": 6,
+    "species": "Panthera leo",
+    "float1": -44.347,
+    "float2": 2.556,
+    "float3": 7.783010731509798
+  },
+  {
+    "id": 7,
+    "species": "Panthera leo",
+    "float1": 5.923,
+    "float2": 2.556,
+    "float3": 21.97869590140418
+  },
+  {
+    "id": 8,
+    "species": "Panthera leo",
+    "float1": -23.941,
+    "float2": 2.556,
+    "float3": -41.46339971643509
+  },
+  {
+    "id": 9,
+    "species": "Panthera leo",
+    "float1": 43.988,
+    "float2": 2.556,
+    "float3": -2.767734338147541
+  }
+]
